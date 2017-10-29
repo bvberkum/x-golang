@@ -43,11 +43,10 @@ after_success:
     esac
 
 before_deploy:
-  - export RELEASE_PKG_FILE="$(echo $APP_ID*)"
-  - test -e "$RELEASE_PKG_FILE" && { export FILE_EXISTS=1;
+  - export RELEASE_PKG_FILE="$(echo $APP_ID* | awk '{print $1}')"
+  - test -e "$RELEASE_PKG_FILE" && {
         echo "deploying $RELEASE_PKG_FILE to GitHub releases";
-      } || { export FILE_EXISTS=0;
-        echo "nothing to deploy to github '$RELEASE_PKG_FILE'"; }
+      } || { echo "nothing to deploy to github '$RELEASE_PKG_FILE'"; }
 
 deploy:
   provider: releases
@@ -58,5 +57,3 @@ deploy:
   on:
     repo: bvberkum/x-golang
     tags: true
-#    branch: dev
-# FIXME   condition: "$FILE_EXISTS" == "1"
