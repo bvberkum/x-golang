@@ -1,0 +1,62 @@
+sudo: required
+
+services:
+  - docker
+
+language: go
+
+env:
+  global:
+    - APP_ID=x-golang
+    - BUILD_GOARCH="386 amd64 arm" 
+    - BUILD_GOOS="linux" 
+
+script:
+  - docker run --rm
+    -e CGO_ENABLED=true
+    -e COMPRESS_BINARY=true
+    -e BUILD_GOOS="$BUILD_GOOS"
+    -e BUILD_GOARCH="$BUILD_GOARCH"
+    -v "$(pwd -P):/src"
+    -v /var/run/docker.sock:/var/run/docker.sock
+    centurylink/golang-builder-cross $APP_ID:local
+
+after_success:
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+  - echo '---------' && env && echo '--------------'
+  - echo "Pushing $APP_ID:$TRAVIS_BRANCH or $APP_ID:$TRAVIS_TAG"
+  - case "$TRAVIS_BRANCH" in
+      dev )
+          docker tag $APP_ID:local $DOCKER_USERNAME/$APP_ID:dev;
+          docker push $DOCKER_USERNAME/$APP_ID:dev
+        ;;
+      master )
+          docker tag $APP_ID:local $DOCKER_USERNAME/$APP_ID:latest;
+          docker push $DOCKER_USERNAME/$APP_ID:latest
+        ;;
+    esac
+  - case "$TRAVIS_TAG" in
+      [0-9]* )
+          docker tag $APP_ID:local $DOCKER_USERNAME/$APP_ID:$TRAVIS_TAG;
+          docker push $DOCKER_USERNAME/$APP_ID:$TRAVIS_TAG
+        ;;
+    esac
+
+before_deploy:
+  - export RELEASE_PKG_FILE="$(echo $APP_ID*)"
+  - test -e "$RELEASE_PKG_FILE" && { export FILE_EXISTS=1;
+        echo "deploying $RELEASE_PKG_FILE to GitHub releases";
+      } || { export FILE_EXISTS=0;
+        echo "nothing to deploy to github '$RELEASE_PKG_FILE'"; }
+
+deploy:
+  provider: releases
+  api_key:
+    secure: RC7zpR8PRcVtry9WFLRgmBPw0XvLAGyGKwoF4FCqEFjNyKu6zs+ntAJdQMCRwXqN9o1UcrURpCP9XqCpfNQSOYtnKjllYaGxgwKgzkGcD1t4M+xe/2nE4jerKyT9611k+AIgwKehicY95yFj8T9Swck9jIdXZd5gN+Dj7+oOjulhAGyigo7I/2PfWeEmYbbkyBPUtqoAbb3EDZQAUI1E48K0SnJVuVS3aT+oa/09KjzvYMjJPuzdZr2Uca96Kx9fkdtxIwIP8g7+55klfb10rgCqBzGhNahJ//L+lyNnKSyw8Dte0YaFxs8QwY22Hkf/mR6XIbQ9mPysE8gnHHEvE76STDkEyivANnhfY2rSCqTaCNOPGPkLLkDTRYIRvHc4zbDvEsQI2BI1pANYXYt5gkUz5FZhJAWYmU2RuBWKz9fHDBPVvypiOJgClOe/wshaK9iXWYlDI1Lcx2RA93Ht27MBY6unI0PiOqdM/0iUBQ528cols15X2k/sr344IPNB2WPXav+q0c0SUTcz4VBDV995mgnYbURXDy2m3V+JWB9j7QaLUaPcsoIF+rWwBFv727GZ+ESwPJm7YoT78iQuMHYDtKm7R9RU3/b7Qfa17wLi6fIj1R0luImkq1KNVRxCvpMns2LkxfTBtzxyMzTy4Id7ASibIKP8PFY8NFUdf6s=
+  skip_cleanup: true
+  file: "${RELEASE_PKG_FILE}"
+  on:
+    repo: bvberkum/x-golang
+    tags: true
+#    branch: dev
+# FIXME   condition: "$FILE_EXISTS" == "1"
