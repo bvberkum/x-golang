@@ -7,7 +7,7 @@ import (
 )
 
 var app_id = "x-golang"
-var version = "0.0.1-dev" // x-golang
+var version = "0.0.1" // x-golang
 
 func main() {
   fmt.Println("Hello world!")
