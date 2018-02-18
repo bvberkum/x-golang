@@ -12,14 +12,16 @@
 docker run --rm bvberkum/x-golang:dev
 ```
 
+---
+
 #### Architecture
 XXX: Not sure which architecture would belong in the container.
 Using amd64 seems to work on my macbook.
 Does x86 or am64 make a difference?
 
+###### Files
 Container size: 576 KB
 
-###### Files
 Other files:
 ```
 398B main.go
