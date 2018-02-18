@@ -3,23 +3,23 @@
 
 <img src="asset/README-fig1.svg" alt="Fig 1. illustration of main project flow. " width="60%" >
 
-## Version: 0.0.2-dev
+### Version: 0.0.2-dev
 
 - [Week 43 '17](doc/17-43.md)
 
-# Test:
+### Test:
 ```
 docker run --rm bvberkum/x-golang:dev
 ```
 
-# Architecture
+#### Architecture
 XXX: Not sure which architecture would belong in the container.
 Using amd64 seems to work on my macbook.
 Does x86 or am64 make a difference?
 
 Container size: 576 KB
 
-# Files
+##### Files
 Other files:
 ```
 398B main.go
