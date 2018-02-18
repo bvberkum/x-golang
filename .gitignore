@@ -1,2 +1,4 @@
 .*sw[pon]
 *~
+.versioned-files.list
+*.html

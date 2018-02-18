@@ -7,6 +7,7 @@ language: go
 
 env:
   global:
+    - NS_NAME=bvberkum
     - APP_ID=x-golang
     - BUILD_GOARCH="386 amd64 arm" 
     - BUILD_GOOS="linux" 
@@ -53,7 +54,10 @@ deploy:
   api_key:
     secure: RC7zpR8PRcVtry9WFLRgmBPw0XvLAGyGKwoF4FCqEFjNyKu6zs+ntAJdQMCRwXqN9o1UcrURpCP9XqCpfNQSOYtnKjllYaGxgwKgzkGcD1t4M+xe/2nE4jerKyT9611k+AIgwKehicY95yFj8T9Swck9jIdXZd5gN+Dj7+oOjulhAGyigo7I/2PfWeEmYbbkyBPUtqoAbb3EDZQAUI1E48K0SnJVuVS3aT+oa/09KjzvYMjJPuzdZr2Uca96Kx9fkdtxIwIP8g7+55klfb10rgCqBzGhNahJ//L+lyNnKSyw8Dte0YaFxs8QwY22Hkf/mR6XIbQ9mPysE8gnHHEvE76STDkEyivANnhfY2rSCqTaCNOPGPkLLkDTRYIRvHc4zbDvEsQI2BI1pANYXYt5gkUz5FZhJAWYmU2RuBWKz9fHDBPVvypiOJgClOe/wshaK9iXWYlDI1Lcx2RA93Ht27MBY6unI0PiOqdM/0iUBQ528cols15X2k/sr344IPNB2WPXav+q0c0SUTcz4VBDV995mgnYbURXDy2m3V+JWB9j7QaLUaPcsoIF+rWwBFv727GZ+ESwPJm7YoT78iQuMHYDtKm7R9RU3/b7Qfa17wLi6fIj1R0luImkq1KNVRxCvpMns2LkxfTBtzxyMzTy4Id7ASibIKP8PFY8NFUdf6s=
   skip_cleanup: true
-  file: "${RELEASE_PKG_FILE}"
+  file:
+    - $APP_ID-linux-amd64
+    - $APP_ID-linux-386
+    - $APP_ID-linux-arm
   on:
-    repo: bvberkum/x-golang
+    repo: $NS_NAME/$APP_ID
     tags: true
