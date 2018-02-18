@@ -7,7 +7,7 @@
 
 - [Week 43 '17](doc/17-43.md)
 
-### Test:
+#### Test:
 ```
 docker run --rm bvberkum/x-golang:dev
 ```
@@ -19,7 +19,7 @@ Does x86 or am64 make a difference?
 
 Container size: 576 KB
 
-##### Files
+###### Files
 Other files:
 ```
 398B main.go
