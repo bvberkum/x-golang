@@ -16,7 +16,7 @@ Does x86 or am64 make a difference?
 
 Container size: 576 KB
 
-![Fig 1. illustration of main project flow.](asset/README-fig1.svg)
+<img src="asset/README-fig1.svg" alt="Fig 1. illustration of main project flow. " width="60%" >
 
 Other files:
 ```
