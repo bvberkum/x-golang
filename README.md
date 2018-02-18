@@ -5,6 +5,8 @@ Version: 0.0.2-dev
 
 - [Week 43 '17](doc/17-43.md)
 
+<img src="asset/README-fig1.svg" alt="Fig 1. illustration of main project flow. " width="60%" >
+
 Test:
 ```
 docker run --rm bvberkum/x-golang:dev
@@ -15,8 +17,6 @@ Using amd64 seems to work on my macbook.
 Does x86 or am64 make a difference?
 
 Container size: 576 KB
-
-<img src="asset/README-fig1.svg" alt="Fig 1. illustration of main project flow. " width="60%" >
 
 Other files:
 ```
