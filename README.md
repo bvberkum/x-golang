@@ -3,7 +3,7 @@
 
 <img src="asset/README-fig1.svg" alt="Fig 1. illustration of main project flow. " width="60%" >
 
-### Version: 0.0.2-dev
+##### Version: 0.0.2-dev
 
 - [Week 43 '17](doc/17-43.md)
 
